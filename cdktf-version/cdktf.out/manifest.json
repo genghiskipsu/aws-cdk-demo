@@ -1,0 +1,13 @@
+{
+  "version": "0.17.0",
+  "stacks": {
+    "learn-cdktf-kipsu": {
+      "name": "learn-cdktf-kipsu",
+      "constructPath": "learn-cdktf-kipsu",
+      "workingDirectory": "stacks/learn-cdktf-kipsu",
+      "synthesizedStackPath": "stacks/learn-cdktf-kipsu/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}

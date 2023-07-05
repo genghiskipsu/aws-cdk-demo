@@ -1,0 +1,156 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "cloud",
+      "cloud": "tfc",
+      "stackName": "learn-cdktf-kipsu",
+      "version": "0.17.0"
+    },
+    "outputs": {
+      "learn-cdktf-kipsu": {
+        "swift": {
+          "api": {
+            "endpoint_url": "swift_api_endpoint_url_75214287"
+          }
+        }
+      }
+    }
+  },
+  "output": {
+    "swift_api_endpoint_url_75214287": {
+      "value": "${aws_apigatewayv2_api.swift_api_api-gw_84752DC0.api_endpoint}"
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "region": "us-east-1"
+      }
+    ]
+  },
+  "resource": {
+    "aws_apigatewayv2_api": {
+      "swift_api_api-gw_84752DC0": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/api/api-gw",
+            "uniqueId": "swift_api_api-gw_84752DC0"
+          }
+        },
+        "cors_configuration": {
+          "allow_headers": [
+            "*"
+          ],
+          "allow_methods": [
+            "*"
+          ],
+          "allow_origins": [
+            "*"
+          ]
+        },
+        "name": "SwiftLambda",
+        "protocol_type": "HTTP",
+        "target": "${aws_lambda_function.swift_api_EC5D1A3C.arn}"
+      }
+    },
+    "aws_dynamodb_table": {
+      "swift_storage_table_7E966497": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/storage/table",
+            "uniqueId": "swift_storage_table_7E966497"
+          }
+        },
+        "attribute": [
+          {
+            "name": "id",
+            "type": "S"
+          }
+        ],
+        "billing_mode": "PAY_PER_REQUEST",
+        "hash_key": "id",
+        "name": "SwiftSongs"
+      }
+    },
+    "aws_iam_role": {
+      "swift_api_lambda-exec_B7528617": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/api/lambda-exec",
+            "uniqueId": "swift_api_lambda-exec_B7528617"
+          }
+        },
+        "assume_role_policy": "{\"Version\": \"2012-10-17\", \"Statement\": {\"Action\": \"sts:AssumeRole\", \"Principal\": {\"Service\": \"lambda.amazonaws.com\"}, \"Effect\": \"Allow\", \"Sid\": \"\"}}",
+        "inline_policy": [
+          {
+            "name": "AllowDynamoDB",
+            "policy": "{\"Version\": \"2012-10-17\", \"Statement\": {\"Action\": [\"dynamodb:Scan\", \"dynamodb:Query\", \"dynamodb:BatchGetItem\", \"dynamodb:GetItem\", \"dynamodb:PutItem\"], \"Resource\": \"${aws_dynamodb_table.swift_storage_table_7E966497.arn}\", \"Effect\": \"Allow\"}}"
+          }
+        ],
+        "name": "SwiftLambda"
+      }
+    },
+    "aws_iam_role_policy_attachment": {
+      "swift_api_lambda-managed-policy_A0EEC2A8": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/api/lambda-managed-policy",
+            "uniqueId": "swift_api_lambda-managed-policy_A0EEC2A8"
+          }
+        },
+        "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        "role": "${aws_iam_role.swift_api_lambda-exec_B7528617.name}"
+      }
+    },
+    "aws_lambda_function": {
+      "swift_api_EC5D1A3C": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/api/api",
+            "uniqueId": "swift_api_EC5D1A3C"
+          }
+        },
+        "environment": {
+          "variables": {
+            "DYNAMODB_TABLE_NAME": "${aws_dynamodb_table.swift_storage_table_7E966497.name}"
+          }
+        },
+        "filename": "assets/swift_api_lambda-asset_9A613240/E8FDF816606D83BC71E313A7118DA513/archive.zip",
+        "function_name": "SwiftLambda",
+        "handler": "index.lambda_handler",
+        "role": "${aws_iam_role.swift_api_lambda-exec_B7528617.arn}",
+        "runtime": "python3.9",
+        "source_code_hash": "E8FDF816606D83BC71E313A7118DA513"
+      }
+    },
+    "aws_lambda_permission": {
+      "swift_api_apigw-lambda_4E255421": {
+        "//": {
+          "metadata": {
+            "path": "learn-cdktf-kipsu/swift/api/apigw-lambda",
+            "uniqueId": "swift_api_apigw-lambda_4E255421"
+          }
+        },
+        "action": "lambda:InvokeFunction",
+        "function_name": "${aws_lambda_function.swift_api_EC5D1A3C.function_name}",
+        "principal": "apigateway.amazonaws.com",
+        "source_arn": "${aws_apigatewayv2_api.swift_api_api-gw_84752DC0.execution_arn}/*/*"
+      }
+    }
+  },
+  "terraform": {
+    "cloud": {
+      "hostname": "app.terraform.io",
+      "organization": "GenghisCorp",
+      "workspaces": {
+        "name": "SwiftSongs"
+      }
+    },
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "5.6.2"
+      }
+    }
+  }
+}
