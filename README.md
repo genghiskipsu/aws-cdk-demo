@@ -1,58 +1,10 @@
 
-# Welcome to your CDK Python project!
+# Let's mess around with the CDK!
 
-This is a blank project for CDK development with Python.
+This is a quick demo of the AWS CDK initially created for a Kipsu Dev Share.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+`app.py` is the file that gets synthesized and stands up a stack in AWS, but the real meat of the CDK work is done in `aws_cdk_trigger/index.py`. There you'll see the storage (a Dynamo table and an S3 bucket) get created along with two Lambdas and an API gateway. Permissions are also handled in a trivial way in this file, which is, to my mind, the major reason to use the AWS CDK over Terraform's. 
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+If you have AWS credentials configured, apporpriate permissions, and the CDK CLI tools installed, you should just be able to load up a virtual environment, run `pip install -r requirements.txt`, and then just `cdk bootstrap` and `cdk deploy` this whole monstrosity in your personal account or whatever.
 
-To manually create a virtualenv on MacOS and Linux:
-
-```
-$ python3 -m venv .venv
-```
-
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
-
-```
-$ source .venv/bin/activate
-```
-
-If you are a Windows platform, you would activate the virtualenv like this:
-
-```
-% .venv\Scripts\activate.bat
-```
-
-Once the virtualenv is activated, you can install the required dependencies.
-
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
-```
-
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
-
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
+Once stood up, you can navigate directly the endpoint URL for the `GET` version of the endpoint or paste your URL into the appropriate spot in `poke.py` to send a `POST` request to the endpoint.
