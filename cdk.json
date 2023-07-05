@@ -11,8 +11,8 @@
       "source.bat",
       "**/__init__.py",
       "python/__pycache__",
-      "tests"
-      "cdktf-version"
+      "tests",
+      "cdktf-version/"
     ]
   },
   "context": {
