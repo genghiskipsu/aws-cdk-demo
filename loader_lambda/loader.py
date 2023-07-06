@@ -1,7 +1,7 @@
 import boto3
 import csv
-import uuid
 import os
+import uuid
 
 table_name = os.environ['DYNAMO_TABLE_NAME']
 s3 = boto3.client('s3')

@@ -1,7 +1,7 @@
-import os
-import json
-import uuid
 import boto3
+import json
+import os
+import uuid
 
 if os.environ['DYNAMO_TABLE_NAME'] is None:
     raise Exception("DYNAMO_TABLE_NAME env variable is required")
